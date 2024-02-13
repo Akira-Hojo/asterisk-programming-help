@@ -1,0 +1,33 @@
+[some-context-where-this-needs-to-happen]
+
+exten => _X.,1,NoOp(Attempting to set Caller ID from headers)
+; Extract the PAI and RPID headers
+same => n,Set(PAI=${PJSIP_HEADER(read,P-Asserted-Identity)})
+same => n,Set(RPID=${PJSIP_HEADER(read,Remote-Party-ID)})
+
+; Initialize default Caller ID information
+same => n,Set(DEFAULT_CID_NAME=UNKNOWN CID)
+same => n,Set(DEFAULT_CID_NUMBER=5555555)
+
+; Parse out the caller's display name and number from PAI first, if present
+same => n,Set(HEADER_NAME=${CUT(PAI,"\"",2)})
+same => n,Set(HEADER_NUM=${CUT(CUT(PAI,@,1),:,2)})
+
+; If PAI is not present or has no number, use RPID if available
+same => n,ExecIf($["${HEADER_NUM}" = ""]?Set(HEADER_NAME=${CUT(RPID,"\"",2)}))
+same => n,ExecIf($["${HEADER_NUM}" = ""]?Set(HEADER_NUM=${CUT(CUT(RPID,@,1),:,2)}))
+
+; If no number is present in PAI or RPID, set to default
+same => n,ExecIf($["${HEADER_NUM}" = ""]?Set(HEADER_NAME=${DEFAULT_CID_NAME}))
+same => n,ExecIf($["${HEADER_NUM}" = ""]?Set(HEADER_NUM=${DEFAULT_CID_NUMBER}))
+
+; Set the Caller ID name and number
+same => n,Set(CALLERID(name)=${HEADER_NAME})
+same => n,Set(CALLERID(number)=${HEADER_NUM})
+
+; Debugging output
+same => n,NoOp(Caller ID Name is: ${CALLERID(name)})
+same => n,NoOp(Caller ID Number is: ${CALLERID(number)})
+
+; Transfer the call to the another context context
+same => n,Goto(another-context,${EXTEN},1)
