@@ -1,6 +1,6 @@
 ; Set an external caller ID based on an internal caller ID condition. 
 ; For example, maybe you want the internal extension LIVING ROOM 
-; to have a certain ;caller ID when making a certain call. Or in 
+; to have a certain caller ID when dialing to a certain number. Or in 
 ; this case, we are handling a TTY and a FAX and setting the 
 ; caller ID based on that.
 
