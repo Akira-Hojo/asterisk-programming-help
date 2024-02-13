@@ -1,0 +1,11 @@
+; chan_sip
+exten => 1234,1,Dial(SIP/6010,30) ; When extension 1234 called, dial a local SIP endpoint for 30 seconds.
+
+; PJSIP
+exten => 1234,1,Dial(PJSIP/6010,30) ; When extension 1234 called, dial a local PJSIP endpoint for 30 seconds.
+
+; PJSIP at another endpoint
+exten => 1234,1,Dial(PJSIP/6010@SOME-ENDPOINT,30) ; When extension 1234 called, dial an external PJSIP endpoint for 30 seconds.
+
+; DAHDI
+exten => 1234,1,Dial(DAHDI/1,30) ; When extension 1234 called, dial a DAHDI channel 1 for 30 seconds.
