@@ -1,6 +1,6 @@
 [some-context-where-this-needs-to-happen]
 
-exten => _X.,1,NoOp(Attempting to set Caller ID from headers)
+exten => _X.,1,NoOp(Attempting to set Caller ID from headers) ; This is a number catch all
 ; Extract the PAI and RPID headers
 same => n,Set(PAI=${PJSIP_HEADER(read,P-Asserted-Identity)})
 same => n,Set(RPID=${PJSIP_HEADER(read,Remote-Party-ID)})
