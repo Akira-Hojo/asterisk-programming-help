@@ -5,8 +5,8 @@ same => n,Hangup()
 
 [tty-send]
 exten => s,1,Progress()
-  same => n,TddRx(b(8))
-  same => n,TddTx(${ARG1})
-  same => n,NoOp(Calculating length of the TTY message for streaming silence...)
-  same => n,StreamSilence($[$[${LEN(${ARG1})}+CEIL(${LEN(${ARG1})}/72)+2]*0.1776])
-  same => n,Return()
+same => n,TddRx(b(8))
+same => n,TddTx(${ARG1})
+same => n,NoOp(Calculating length of the TTY message for streaming silence...)
+same => n,StreamSilence($[$[${LEN(${ARG1})}+CEIL(${LEN(${ARG1})}/72)+2]*0.1776])
+same => n,Return()
